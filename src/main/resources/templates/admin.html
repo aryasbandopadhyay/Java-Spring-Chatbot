@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Chatbot</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <link rel="stylesheet" type="text/css" href="../ChatBot_HTML/resources/css/admin.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+        <style>
+            table{
+                
+                border-collapse: collapse;
+                width:100%;
+            }
+
+            td,th{
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px; 
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+        </style>
+    
+    </head>
+
+    <body>
+        
+    <div class="container">
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>EMAIL ID</th>
+                    <th>BUDGET</th>
+                    <th>CLASS</th>
+                    <th>COLOR</th>
+                    <th>ENGINE</th>
+                    <th>CAR CHECKED</th>
+                    <th>DELIVERY</th>
+                </tr>
+            </thead>
+            
+            <tbody id="data">
+
+            </tbody>
+
+        </table>
+    </div>
+
+        <script>
+           axios.get('http://localhost:8080/showChat',{})
+            .then(function(response){
+                console.log(response.data);
+                if(response.data.length>0)
+                {
+                    var temp="";
+                    response.data.forEach(element => {
+                        temp +="<tr>";
+                        temp +="<td>"+element.name+"</td>";
+                        temp +="<td>"+element.email+"</td>";
+                        temp +="<td>"+element.budget+"</td>";
+                        temp +="<td>"+element.carClass+"</td>";
+                        temp +="<td>"+element.color+"</td>";
+                        temp +="<td>"+element.engine+"</td>";
+                        temp +="<td>"+element.carChecked+"</td>";
+                        temp +="<td>"+element.delivery+"</td></tr>";
+                    });
+
+                    document.getElementById("data").innerHTML= temp;
+                }
+               
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+        </script>
+    </body>
+</html>
